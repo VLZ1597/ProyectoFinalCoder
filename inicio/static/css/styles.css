@@ -90,6 +90,33 @@
     scroll-behavior: smooth;
   }
 }
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.navbar-dark.bg-dark.dark-mode {
+  background-color: #333333;
+}
+
+.card.dark-mode, .card-header.dark-mode, .card-body.dark-mode {
+  background-color: #333333;
+  color: #ffffff;
+}
+
+.footer.dark-mode {
+  background-color: #333333;
+}
+
+.nav-link.dark-mode {
+  color: #ffffff;
+}
+
+a.badge.bg-secondary.text-decoration-none.link-light.dark-mode {
+  background-color: #555555;
+  color: #ffffff;
+}
 
 body {
   margin: 0;
