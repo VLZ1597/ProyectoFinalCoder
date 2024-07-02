@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Guitar Heaven{% endblock %}
+
+{% block navbar %}
+    {{ block.super }}
+{% endblock navbar %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article>
+                <header class="mb-4">
+                    <h1 class="fw-bolder mb-1">Bienvenido a Guitar Heaven!</h1>
+                </header>
+                <!-- Preview image figure-->
+                <figure class="mb-4">
+                    <iframe width="100%" height="390" src="https://www.youtube.com/embed/mBXbrdr5nqs?si=s25kmVRAYBCXAYLg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </figure>
+                <!-- Post content-->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">Incursionar en la música es una tarea difícil, ya que requiere mucho esfuerzo y dedicación. Sin embargo, la constancia es clave para alcanzar el éxito y disfrutar del proceso creativo.</p>
+                    <p class="fs-5 mb-4">La música es un arte vasto y complejo, y cada músico aporta su propio toque personal. No hay una fórmula única para triunfar, pero la pasión y la perseverancia son elementos esenciales.</p>
+                    <p class="fs-5 mb-4">Enfrentar desafíos como la competencia, la búsqueda de inspiración y la superación de obstáculos técnicos son parte del camino de todo músico. Es importante no rendirse y seguir aprendiendo constantemente.</p>
+                    <h2 class="fw-bolder mb-4 mt-5">La constancia en la música</h2>
+                    <p class="fs-5 mb-4">Para mí, la interfaz más fascinante es la música misma. Cada día tengo ideas musicales y me di cuenta de que podría guardarlas para mí o compartirlas con personas que podrían estar interesadas.</p>
+                    <p class="fs-5 mb-4">La música tiene un efecto poderoso en nuestras emociones y pensamientos. Quiero entender cómo afecta nuestras vidas y qué podemos aprender de ella. Explorar la música nos permite descubrir nuevas formas de expresión y conexión.</p>
+                </section>
+            </article>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Categories widget-->
+            <div class="card mb-4 bg-dark">
+                <div class="card-header">Categories</div>
+                <div class="card-body">
+                    <ul class="list-unstyled mb-0">
+                        <li><a class="text-white" href="{% url 'post_list' %}">Blog</a></li>
+                        <li><a class="text-white" href="{% url 'post_new' %}">Nuevo post</a></li>
+                        <li><a class="text-white" href="{% url 'crear_guitar' %}">Vota tu guitar</a></li>
+                        <li><a class="text-white" href="{% url 'guitars' %}">Listado</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

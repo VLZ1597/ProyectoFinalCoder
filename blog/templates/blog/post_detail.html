@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Detalle - Guitar Heaven{% endblock %}
+
+{% block navbar %}
+{{ block.super }}
+{% endblock navbar %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article class="card mb-4">
+                <header class="card-header">
+                    <!-- Avatar del autor del post -->
+                    {% if post.author.datosextra.avatar %}
+                        <img src="{{ post.author.datosextra.avatar.url }}" class="avatar" alt="{{ post.author.username }}'s avatar">
+                    {% else %}
+                        <img src="{% static 'images/default_avatar.png' %}" class="avatar" alt="Default avatar">
+                    {% endif %}
+                    <h1 class="fw-bolder mb-1">{{ post.title }}</h1>
+                    <div class="text-muted fst-italic mb-2">Posteado por {{ post.author }} || {{ post.created_at }} ||</div>
+                </header>
+                <section class="card-body">
+                    <p class="fs-5 mb-4">{{ post.content }}</p>
+                    {% if post.author == request.user %}
+                    <form action="{% url 'delete_post' post.id %}" method="POST" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Eliminar Post</button>
+                    </form>
+                    {% endif %}
+                </section>
+            </article>
+            <!-- Comments section-->
+            <section class="mb-5">
+                <div class="card bg-dark">
+                    <div class="card-body">
+                        <!-- Comment form-->
+                        {% if request.user.is_authenticated %}
+                            <form method="post" class="mb-4">
+                                {% csrf_token %}
+                                <textarea class="form-control" name="content" rows="3"></textarea>
+                                <button type="submit" class="btn btn-primary mt-2">Agregar Comentario</button>
+                            </form>
+                        {% else %}
+                            <div class="alert alert-warning" role="alert">
+                                Necesitas loguearte para comentar.
+                            </div>
+                        {% endif %}
+                        <!-- Comments list-->
+                        {% for comment in comments %}
+                            <div class="d-flex mb-4">
+                                <div class="flex-shrink-0">
+                                    <!-- Avatar del autor del comentario -->
+                                    {% if comment.author.datosextra.avatar %}
+                                        <img src="{{ comment.author.datosextra.avatar.url }}" alt="Avatar" class="avatar">
+                                    {% else %}
+                                        <img src="{% static 'images/default_avatar.png' %}" class="avatar" alt="Default avatar">
+                                    {% endif %}
+                                </div>
+                                <div class="ms-3">
+                                    <div class="fw-bold">{{ comment.author }}</div>
+                                    {{ comment.content }}
+                                </div>
+                                {% if comment.author == request.user %}
+                                <div class="ms-3">
+                                    <form action="{% url 'delete_comment' comment.id %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar Comentario</button>
+                                    </form>
+                                </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Categories widget-->
+            <div class="card mb-4 bg-dark">
+                <div class="card-header">Categorias</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a class="text-white" href="{% url 'post_list' %}">Blog</a></li>
+                                <li><a class="text-white" href="{% url 'post_new' %}">Nuevo post</a></li>
+                                <li><a class="text-white" href="{% url 'crear_guitar' %}">Vota tu guitar</a></li>
+                                <li><a class="text-white" href="{% url 'guitars' %}">Listado</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}

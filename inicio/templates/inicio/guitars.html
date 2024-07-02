@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Listado - Guitar Heaven{% endblock %}
+
+{% block navbar %}
+{{ block.super }}
+{% endblock navbar %}
+
+{% block main %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <article>
+                <header class="mb-4">
+                    <h1 class="fw-bolder mb-1">Listado</h1>
+                </header>
+                <section class="mb-5">
+                    <form action="{% url 'guitars' %}" method="get">
+                        {{ formulario.as_p }}
+                        <input class="btn btn-primary" type="submit" value="Buscar">
+                    </form>
+                    <h3>
+                        {% if guitars %}
+                            <ul>
+                                {% for guitar in guitars %}
+                                    <li>
+                                        {{ guitar.marca }} - {{ guitar.forma }}
+                                        {% if guitar.user.datosextra.avatar %}
+                                            <img src="{{ guitar.user.datosextra.avatar.url }}" class="avatar" alt="{{ guitar.user.username }}'s avatar">
+                                        {% else %}
+                                            <img src="{% static 'images/default_avatar.png' %}" class="avatar" alt="Default avatar">
+                                        {% endif %}
+                                        {% if guitar.user == request.user %}
+                                            |<a href="{% url 'eliminar_guitar' guitar.id %}">Eliminar</a>|
+                                            |<a href="{% url 'editar_guitar' guitar.id %}">Editar</a>|
+                                        {% endif %}
+                                        |<a href="{% url 'ver_guitar' guitar.id %}">Ver</a>|
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p>No hay Guitarras creadas.</p>
+                        {% endif %}
+                    </h3>
+                </section>
+                <section class="mb-5">
+                    <h2>Guitarras por Marca</h2>
+                    {% if guitar_by_brand %}
+                        <ul>
+                            {% for group in guitar_by_brand %}
+                                <li>{{ group.marca }}: {{ group.total }} guitarras</li>
+                            {% endfor %}
+                            {% if top_brand %}
+                                <div class="highlight">
+                                    La marca con más guitarras es "{{ top_brand.marca }}" con {{ top_brand.total }} guitarras.
+                                </div>
+                            {% endif %}
+                        </ul>
+                    {% else %}
+                        <p>No hay datos de guitarras disponibles.</p>
+                    {% endif %}
+                </section>
+            </article>
+        </div>
+        <div class="col-lg-4">
+            <div class="card mb-4 bg-dark">
+                <div class="card-header">Categorías</div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0">
+                                <li><a class="text-white" href="{% url 'post_list' %}">Blog</a></li>
+                                <li><a class="text-white" href="{% url 'post_new' %}">Nuevo post</a></li>
+                                <li><a class="text-white" href="{% url 'crear_guitar' %}">Vota tu guitar</a></li>
+                                <li><a class="text-white" href="{% url 'guitars' %}">Listado</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

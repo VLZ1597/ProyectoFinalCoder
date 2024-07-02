@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Eliminar - Guitar Heaven{% endblock %}
+
+{% block navbar %}
+{{ block.super }}
+{% endblock navbar %}
+
+{% block main %}
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <!-- Post content-->
+                    <article>
+                        <header class="mb-4">
+                            <!-- Post title-->
+                            <h1 class="fw-bolder mb-1">Eliminar</h1>
+                        </header>
+                        <section class="mb-5">
+                            <form action={% url "eliminar_guitar" guitar.id %} method="POST">
+                                {% csrf_token %}
+                                <p>
+                                   <h4> {{guitar}}</h4>
+                                </p>
+                                <input type="submit" value="Confirmar Borrado"> 
+                            
+                            </form>
+                        </section>
+                    </article>
+                </div>
+                <!-- Side widgets-->
+                <div class="col-lg-4">
+                    <!-- Categories widget-->
+                    <div class="card mb-4 bg-dark">
+                        <div class="card-header">Categorias</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <ul class="list-unstyled mb-0">
+                                        <li><a class="text-white" href="{% url 'post_list' %}">Blog</a></li>
+                                        <li><a class="text-white" href="{% url 'post_new' %}">Nuevo post</a></li>
+                                        <li><a class="text-white" href="{% url 'crear_guitar' %}">Vota tu guitar</a></li>
+                                        <li><a class="text-white" href="{% url 'guitars' %}">Listado</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+{% endblock main %}
+

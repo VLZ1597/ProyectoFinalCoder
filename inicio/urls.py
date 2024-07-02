@@ -6,7 +6,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('crear_guitar/', views.crear_guitar, name='crear_guitar'),
     path('guitars/', views.guitars,name='guitars'),
-    path('eliminar/<int:id>', views.eliminar_guitar,name='eliminar_guitar'),
-    path('editar/<int:id>/', views.editar_guitar, name='editar_guitar'),
-    path('ver/<int:id>', views.ver_guitar,name='ver_guitar'),
+    path('eliminar/<int:pk>', views.EliminarGuitar.as_view(),name='eliminar_guitar'),
+    path('editar/<int:pk>/', views.EditarGuitar.as_view(), name='editar_guitar'),
+    path('ver/<int:pk>', views.VerGuitar.as_view(),name='ver_guitar'),
 ]
