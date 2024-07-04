@@ -1,17 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="Guitar Heaven - Creación" />
-        <meta name="author" content="Guitar Heaven" />
-        <title>Creación - Guitar Heaven</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+{% load static %}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Guitar Heaven - Creación" />
+    <meta name="author" content="Guitar Heaven" />
+    <title>Creación - Guitar Heaven</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{% static 'assets/favicon.ico' %}" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body, .navbar, .card, .card-header, .card-body, footer {
+            background-color: #343a40;
+            color: white;
+        }
+        .nav-link, .navbar-brand {
+            color: white !important;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .carousel-container {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        .carousel-wrapper {
+            flex: 0 0 auto;
+            width: calc(33.333% - 14px);
+        }
+        .carousel-item img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        @media (max-width: 768px) {
+            .carousel-wrapper {
+                width: 100%;
+            }
+        }
         <style>
             body, .navbar, .card, .card-header, .card-body, footer {
                 background-color: #343a40;
@@ -24,162 +57,116 @@
                 background-color: #007bff;
                 border-color: #007bff;
             }
-            .carousel-container {
-                display: flex;
-                gap: 20px;
-                overflow-x: auto;
-                padding-bottom: 20px;
-                margin-bottom: 40px;
-            }
-            .carousel-wrapper {
-                flex: 0 0 auto;
-                width: calc(33.333% - 14px);
-            }
-            .carousel-item img {
-                max-width: 100%;
-                height: auto;
+            .avatar {
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
                 object-fit: cover;
+                margin-right: 8px;
             }
-            @media (max-width: 768px) {
-                .carousel-wrapper {
-                    width: 100%;
-                }
-            }
-            <style>
-                body, .navbar, .card, .card-header, .card-body, footer {
-                    background-color: #343a40;
-                    color: white;
-                }
-                .nav-link, .navbar-brand {
-                    color: white !important;
-                }
-                .btn-primary {
-                    background-color: #007bff;
-                    border-color: #007bff;
-                }
-                .avatar {
-                    border-radius: 50%;
-                    width: 40px;
-                    height: 40px;
-                    object-fit: cover;
-                    margin-right: 8px;
-                }
-            </style>
         </style>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="{% url 'home' %}">Home</a>
-                <a class="navbar-brand" href="{% url 'about' %}">About Us</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                        {% if request.user.is_authenticated %}
-                        <li class="nav-item">
-                            <a class="nav-link d-flex align-items-center" href="{% url 'ver_perfil' %}">
-                                {% if request.user.datosextra.avatar %}
-                                <img src="{{ request.user.datosextra.avatar.url }}" alt="Avatar" class="avatar">
-                                {% else %}
-                                <img src="{% static 'images/default_avatar.png' %}" alt="Default Avatar" class="avatar">
-                                {% endif %}
-                                {{ request.user.username }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <form action="{% url 'logout' %}" method="POST" class="d-inline">
-                                {% csrf_token %}
-                                <input type="submit" class="btn btn-secondary" value="Logout">
-                            </form>
-                        </li>
-                        {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
-                        {% endif %}
-                    </ul>
-                </div>
+    </style>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">Home</a>
+            <a class="navbar-brand" href="{% url 'about' %}">About Us</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'ver_perfil' %}">
+                            {% if request.user.datosextra.avatar %}
+                            <img src="{{ request.user.datosextra.avatar.url }}" alt="Avatar" class="avatar">
+                            {% else %}
+                            <img src="{% static 'images/default_avatar.png' %}" alt="Default Avatar" class="avatar">
+                            {% endif %}
+                            {{ request.user.username }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <input type="submit" class="btn btn-secondary" value="Logout">
+                        </form>
+                    </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+                    {% endif %}
+                </ul>
             </div>
-        </nav>
-        <!-- Page content-->
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-lg-8">
-                    <!-- Post content-->
-                    <article>
-                        <section class="mb-5">
-                            <p class="fs-5 mb-4">La creación de una guitarra debe ser una elección sincera de tus gustos musicales, que al verla te den ganas de componer.</p>
-                            
-                            
-                            <div class="carousel-container">
-                                <!-- Carousel 1 -->
-                                <div class="carousel-wrapper">
-                                    <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img src="{% static 'imagenes/lespaul0.png' %}" class="d-block w-100" alt="Guitar Model 1">
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="{% static 'imagenes/lespaul1.png' %}" class="d-block w-100" alt="Guitar Model 2">
-                                        
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="{% static 'imagenes/lespaul2.png' %}" class="d-block w-100" alt="Guitar Model 3">
-                                                
-                                            </div>
+        </div>
+    </nav>
+    <!-- Page content-->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Post content-->
+                <article>
+                    <section class="mb-5">
+                        <p class="fs-5 mb-4">La creación de una guitarra debe ser una elección sincera de tus gustos musicales, que al verla te den ganas de componer.</p>
+                        
+                        <div class="carousel-container">
+                            <!-- Carousel 1 -->
+                            <div class="carousel-wrapper">
+                                <div id="carousel1" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{% static 'imagenes/lespaul1.jpg' %}" class="d-block w-100" alt="Guitar LesPaul">
                                         </div>
-                                        <h5>Gibson LesPaul</h5>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <!-- Carousel 2 -->
-                                <div class="carousel-wrapper">
-                                    <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img src="{% static 'imagenes/strat0.png' %}" class="d-block w-100" alt="Guitar Model 1">
-                                                
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="{% static 'imagenes/strat1.png' %}" class="d-block w-100" alt="Guitar Model 2">
-                                                
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="{% static 'imagenes/strat2.png' %}" class="d-block w-100" alt="Guitar Model 3">
-                                                
-                                            </div>
+                                        <div class="carousel-item">
+                                            <img src="{% static 'imagenes/lespaul2.jpg' %}" class="d-block w-100" alt="Guitar LesPaul">
+                                    
                                         </div>
-                                        <h5>Fender Stratocaster</h5>
-                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
-                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Previous</span>
-                                        </button>
-                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
-                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                            <span class="visually-hidden">Next</span>
-                                        </button>
                                     </div>
+                                    <h5>Gibson LesPaul</h5>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel1" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel1" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
                                 </div>
+                            </div>
 
-                                <!-- Carousel 3 -->
-                                <div class="carousel-wrapper">
-                                    <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
-                                        <div class="carousel-inner">
-                                            <div class="carousel-item active">
-                                                <img src="{% static 'imagenes/prs0.png' %}" class="d-block w-100" alt="Guitar Model 1">
-                                                
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="{% static 'imagenes/prs1.png' %}" class="d-block w-100" alt="Guitar Model 2">
-                                                
-                                            </div>
-                                            <div class="carousel-item">
-                                                <img src="{% static 'imagenes/prs2.png' %}" class="d-block w-100" alt="Guitar Model 3">
+                            <!-- Carousel 2 -->
+                            <div class="carousel-wrapper">
+                                <div id="carousel2" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{% static 'imagenes/strato1.jpg' %}" class="d-block w-100" alt="Guitar STRAT">
+                                            
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="{% static 'imagenes/strato2.jpg' %}" class="d-block w-100" alt="Guitar STRAT">
+                                            
+                                        </div>
+                                    </div>
+                                    <h5>Fender Stratocaster</h5>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel2" data-bs-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#carousel2" data-bs-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Carousel 3 -->
+                            <div class="carousel-wrapper">
+                                <div id="carousel3" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <img src="{% static 'imagenes/prs0.png' %}" class="d-block w-100" alt="Guitar PRS">
+                                            
+                                        </div>
+                                        <div class="carousel-item">
+                                            <img src="{% static 'imagenes/prs2.png' %}" class="d-block w-100" alt="Guitar PRS">
                                                 
                                             </div>
                                         </div>
@@ -195,6 +182,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="container mt-5">
                                 <h2>Carga tu Guitar</h2>
                                 {% if messages %}

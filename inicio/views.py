@@ -26,14 +26,15 @@ def crear_guitar(request):
             datos = formulario.cleaned_data
             marca = datos.get('marca')
             forma = datos.get('forma')
-            
-            marcas_validas = ['Gibson', 'Fender', 'PRS']
-            formas_validas = ['LesPaul', 'Stratocaster', 'Custom 24']
+            comentario = datos.get('comentario')
+
+            marcas_validas = ['Gibson', 'Fender', 'PRS', 'gibson', 'fender', 'prs']
+            formas_validas = ['LesPaul', 'Stratocaster', 'Custom 24', 'lespaul', 'stratocaster', 'custom 24']
             
             if marca not in marcas_validas or forma not in formas_validas:
                 messages.error(request, 'Por favor ingresa una marca y forma válidas.')
             else:
-                guitar = Guitar(marca=marca, forma=forma, user=request.user)
+                guitar = Guitar(marca=marca, forma=forma, comentario=comentario, user=request.user)
                 guitar.save()
                 messages.success(request, 'Guitar creada exitosamente.')
                 return redirect('guitars')
